@@ -40,7 +40,7 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
 
     match trait_name.ends_with("Assign") {
       true=> quote! {
-        impl ::std::ops::#_trait for #name {
+        impl ::std::ops::#_trait<#name> for #name {
           #[inline]
           fn #fn_name(&mut self,rhs: Self) {
             self.x.#fn_name(rhs.x);
@@ -48,9 +48,18 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
             self.z.#fn_name(rhs.z);
           }
         }
+
+        impl ::std::ops::#_trait<f32> for #name {
+          #[inline]
+          fn #fn_name(&mut self,rhs: f32) {
+            self.x.#fn_name(rhs);
+            self.y.#fn_name(rhs);
+            self.z.#fn_name(rhs);
+          }
+        }
       },
       _=> quote! {
-        impl ::std::ops::#_trait for #name {
+        impl ::std::ops::#_trait<#name> for #name {
           type Output=Self;
 
           #[inline]
@@ -59,6 +68,19 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
               x: self.x.#fn_name(rhs.x),
               y: self.y.#fn_name(rhs.y),
               z: self.z.#fn_name(rhs.z)
+            }
+          }
+        }
+
+        impl ::std::ops::#_trait<f32> for #name {
+          type Output=Self;
+
+          #[inline]
+          fn #fn_name(self,rhs: f32)-> Self::Output {
+            Self {
+              x: self.x.#fn_name(rhs),
+              y: self.y.#fn_name(rhs),
+              z: self.z.#fn_name(rhs)
             }
           }
         }

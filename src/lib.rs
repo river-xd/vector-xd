@@ -104,6 +104,14 @@ impl Vec3 {
   }
 }
 
+impl Default for Vec3 {
+  #[inline(always)]
+  fn default()-> Self {
+    Self::ZERO
+  }
+}
+
+
 
 impl Neg for Vec3 {
   type Output=Vec3;
