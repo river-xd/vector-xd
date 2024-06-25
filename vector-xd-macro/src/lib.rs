@@ -15,7 +15,7 @@ use proc_macro2::{
 };
 
 
-const OPERATIONS: [&'static str;8]=["Add","Sub","Mul","Div","AddAssign","SubAssign","MulAssign","DivAssign"];
+const OPERATIONS: [&'static str;10]=["Add","Sub","Mul","Div","AddAssign","SubAssign","MulAssign","DivAssign","Rem","RemAssign"];
 const N: usize=OPERATIONS.len();
 
 
@@ -81,6 +81,19 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
               x: self.x.#fn_name(rhs),
               y: self.y.#fn_name(rhs),
               z: self.z.#fn_name(rhs)
+            }
+          }
+        }
+
+        impl ::std::ops::#_trait<#name> for f32 {
+          type Output=#name;
+
+          #[inline]
+          fn #fn_name(self,rhs: #name)-> Self::Output {
+            #name {
+              x: self.#fn_name(rhs.x),
+              y: self.#fn_name(rhs.y),
+              z: self.#fn_name(rhs.z)
             }
           }
         }
