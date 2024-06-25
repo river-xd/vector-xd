@@ -41,6 +41,7 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
     match trait_name.ends_with("Assign") {
       true=> quote! {
         impl ::std::ops::#_trait for #name {
+          #[inline]
           fn #fn_name(&mut self,rhs: Self) {
             self.x.#fn_name(rhs.x);
             self.y.#fn_name(rhs.y);
@@ -52,6 +53,7 @@ fn implement_operations(name: &Ident)-> [TokenStream;N] {
         impl ::std::ops::#_trait for #name {
           type Output=Self;
 
+          #[inline]
           fn #fn_name(self,rhs: Self)-> Self::Output {
             Self {
               x: self.x.#fn_name(rhs.x),

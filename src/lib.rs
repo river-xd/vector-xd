@@ -12,6 +12,7 @@ pub struct Vec3 {
 
 
 impl Vec3 {
+  #[inline(always)]
   pub const fn new(x: f32,y: f32,z: f32)-> Self {
     Vec3 { x,y,z }
   }
@@ -21,6 +22,7 @@ impl Vec3 {
 impl Neg for Vec3 {
   type Output=Vec3;
 
+  #[inline]
   fn neg(self)-> Self::Output {
     Vec3 {
       x: -self.x,
