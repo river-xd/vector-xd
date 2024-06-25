@@ -26,49 +26,49 @@ pub struct Vec3 {
 
 impl Vec3 {
   /// All zeroes.
-  pub const ZERO: Self = Self::splat(0.0);
+  pub const ZERO: Self=Self::splat(0.0);
 
   /// All ones.
-  pub const ONE: Self = Self::splat(1.0);
+  pub const ONE: Self=Self::splat(1.0);
 
   /// All negative ones.
-  pub const NEG_ONE: Self = Self::splat(-1.0);
+  pub const NEG_ONE: Self=Self::splat(-1.0);
 
   /// All `f32::MIN`.
-  pub const MIN: Self = Self::splat(f32::MIN);
+  pub const MIN: Self=Self::splat(f32::MIN);
 
   /// All `f32::MAX`.
-  pub const MAX: Self = Self::splat(f32::MAX);
+  pub const MAX: Self=Self::splat(f32::MAX);
 
   /// All `f32::NAN`.
-  pub const NAN: Self = Self::splat(f32::NAN);
+  pub const NAN: Self=Self::splat(f32::NAN);
 
   /// All `f32::INFINITY`.
-  pub const INFINITY: Self = Self::splat(f32::INFINITY);
+  pub const INFINITY: Self=Self::splat(f32::INFINITY);
 
   /// All `f32::NEG_INFINITY`.
-  pub const NEG_INFINITY: Self = Self::splat(f32::NEG_INFINITY);
+  pub const NEG_INFINITY: Self=Self::splat(f32::NEG_INFINITY);
 
   /// A unit vector pointing along the positive X axis.
-  pub const X: Self = Self::new(1.0, 0.0, 0.0);
+  pub const X: Self=Self::new(1.0,0.0,0.0);
 
   /// A unit vector pointing along the positive Y axis.
-  pub const Y: Self = Self::new(0.0, 1.0, 0.0);
+  pub const Y: Self=Self::new(0.0,1.0,0.0);
 
   /// A unit vector pointing along the positive Z axis.
-  pub const Z: Self = Self::new(0.0, 0.0, 1.0);
+  pub const Z: Self=Self::new(0.0,0.0,1.0);
 
   /// A unit vector pointing along the negative X axis.
-  pub const NEG_X: Self = Self::new(-1.0, 0.0, 0.0);
+  pub const NEG_X: Self=Self::new(-1.0,0.0,0.0);
 
   /// A unit vector pointing along the negative Y axis.
-  pub const NEG_Y: Self = Self::new(0.0, -1.0, 0.0);
+  pub const NEG_Y: Self=Self::new(0.0,-1.0,0.0);
 
   /// A unit vector pointing along the negative Z axis.
-  pub const NEG_Z: Self = Self::new(0.0, 0.0, -1.0);
+  pub const NEG_Z: Self=Self::new(0.0,0.0,-1.0);
 
   /// The unit axes.
-  pub const AXES: [Self; 3] = [Self::X, Self::Y, Self::Z];
+  pub const AXES: [Self; 3]=[Self::X,Self::Y,Self::Z];
 
 
   #[inline(always)]
@@ -161,35 +161,35 @@ impl AsMut<[f32;3]> for Vec3 {
 impl Sum for Vec3 {
   #[inline]
   fn sum<I: Iterator<Item=Self>>(iter: I)-> Self {
-    iter.fold(Self::ZERO, Self::add)
+    iter.fold(Self::ZERO,Self::add)
   }
 }
 
 impl<'a> Sum<&'a Self> for Vec3 {
   #[inline]
   fn sum<I:Iterator<Item=&'a Self>>(iter: I)-> Self {
-    iter.fold(Self::ZERO, |a, &b| Self::add(a, b))
+    iter.fold(Self::ZERO,|a,&b| Self::add(a,b))
   }
 }
 
 impl Product for Vec3 {
   #[inline]
   fn product<I: Iterator<Item=Self>>(iter: I)-> Self {
-    iter.fold(Self::ONE, Self::mul)
+    iter.fold(Self::ONE,Self::mul)
   }
 }
 
 impl<'a> Product<&'a Self> for Vec3 {
   #[inline]
   fn product<I: Iterator<Item=&'a Self>>(iter: I)-> Self {
-    iter.fold(Self::ONE, |a, &b| Self::mul(a, b))
+    iter.fold(Self::ONE,|a,&b| Self::mul(a,b))
   }
 }
 
 impl Index<usize> for Vec3 {
   type Output=f32;
   #[inline]
-  fn index(&self, index: usize) -> &Self::Output {
+  fn index(&self,index: usize) -> &Self::Output {
     match index {
       0=> &self.x,
       1=> &self.y,
@@ -201,7 +201,7 @@ impl Index<usize> for Vec3 {
 
 impl IndexMut<usize> for Vec3 {
   #[inline]
-  fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+  fn index_mut(&mut self,index: usize) -> &mut Self::Output {
     match index {
       0=> &mut self.x,
       1=> &mut self.y,
@@ -215,7 +215,7 @@ impl IndexMut<usize> for Vec3 {
 
 impl Display for Vec3 {
   fn fmt(&self,f: &mut fmt::Formatter<'_>)-> fmt::Result {
-    write!(f,"({}, {}, {})",self.x,self.y,self.z)
+    write!(f,"({},{},{})",self.x,self.y,self.z)
   }
 }
 
