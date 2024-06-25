@@ -1,5 +1,12 @@
 
-use std::ops::Neg;
+use std::{
+  mem,
+  ops::*,
+  iter::{
+    Sum,
+    Product
+  }
+};
 
 
 
@@ -111,8 +118,6 @@ impl Default for Vec3 {
   }
 }
 
-
-
 impl Neg for Vec3 {
   type Output=Vec3;
 
@@ -125,6 +130,99 @@ impl Neg for Vec3 {
     }
   }
 }
+
+
+impl AsRef<[f32;3]> for Vec3 {
+  #[inline]
+  fn as_ref(&self)-> &[f32;3] {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(self)
+    }
+  }
+}
+
+impl AsMut<[f32;3]> for Vec3 {
+  #[inline]
+  fn as_mut(&mut self)-> &mut [f32;3] {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(self)
+    }
+  }
+}
+
+
+impl Sum for Vec3 {
+  #[inline]
+  fn sum<I: Iterator<Item=Self>>(iter: I)-> Self {
+    iter.fold(Self::ZERO, Self::add)
+  }
+}
+
+impl<'a> Sum<&'a Self> for Vec3 {
+  #[inline]
+  fn sum<I:Iterator<Item=&'a Self>>(iter: I)-> Self {
+    iter.fold(Self::ZERO, |a, &b| Self::add(a, b))
+  }
+}
+
+impl Product for Vec3 {
+  #[inline]
+  fn product<I: Iterator<Item=Self>>(iter: I)-> Self {
+    iter.fold(Self::ONE, Self::mul)
+  }
+}
+
+impl<'a> Product<&'a Self> for Vec3 {
+  #[inline]
+  fn product<I: Iterator<Item=&'a Self>>(iter: I)-> Self {
+    iter.fold(Self::ONE, |a, &b| Self::mul(a, b))
+  }
+}
+
+impl Index<usize> for Vec3 {
+  type Output=f32;
+  #[inline]
+  fn index(&self, index: usize) -> &Self::Output {
+    match index {
+      0=> &self.x,
+      1=> &self.y,
+      2=> &self.z,
+      _=> panic!("index out of bounds"),
+    }
+  }
+}
+
+impl IndexMut<usize> for Vec3 {
+  #[inline]
+  fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+    match index {
+      0=> &mut self.x,
+      1=> &mut self.y,
+      2=> &mut self.z,
+      _=> panic!("index out of bounds"),
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
