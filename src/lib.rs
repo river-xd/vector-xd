@@ -2,6 +2,11 @@
 use std::{
   mem,
   ops::*,
+  fmt::{
+    self,
+    Debug,
+    Display
+  },
   iter::{
     Sum,
     Product
@@ -10,7 +15,7 @@ use std::{
 
 
 
-#[derive(Debug,Clone,Copy,PartialEq)]
+#[derive(Clone,Copy,PartialEq)]
 #[vector_xd_macro::derive_arith]
 pub struct Vec3 {
   pub x: f32,
@@ -207,6 +212,23 @@ impl IndexMut<usize> for Vec3 {
 }
 
 
+
+impl Display for Vec3 {
+  fn fmt(&self,f: &mut fmt::Formatter<'_>)-> fmt::Result {
+    write!(f,"({}, {}, {})",self.x,self.y,self.z)
+  }
+}
+
+
+impl Debug for Vec3 {
+  fn fmt(&self,fmt: &mut fmt::Formatter<'_>)-> fmt::Result {
+    fmt.debug_tuple("Vec3")
+    .field(&self.x)
+    .field(&self.y)
+    .field(&self.z)
+    .finish()
+  }
+}
 
 
 
