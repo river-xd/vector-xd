@@ -231,6 +231,46 @@ impl Debug for Vec3 {
 }
 
 
+impl From<[f32;3]> for Vec3 {
+  #[inline]
+  fn from(arr: [f32;3])-> Self {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(arr)
+    }
+  }
+}
+
+impl From<Vec3> for [f32;3] {
+  #[inline]
+  fn from(v: Vec3)-> Self {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(v)
+    }
+  }
+}
+
+impl From<(f32,f32,f32)> for Vec3 {
+  #[inline]
+  fn from(touple: (f32,f32,f32))-> Self {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(touple)
+    }
+  }
+}
+
+impl From<Vec3> for (f32,f32,f32) {
+  #[inline]
+  fn from(v: Vec3)-> Self {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(v)
+    }
+  }
+}
+
 
 
 
