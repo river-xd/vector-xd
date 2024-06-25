@@ -1,6 +1,7 @@
 
 use std::{
   mem,
+  ptr,
   ops::*,
   fmt::{
     self,
@@ -87,24 +88,25 @@ impl Vec3 {
 
   #[inline]
   pub const fn from_array(v: [f32;3])-> Self {
-    Vec3 {
-      x: v[0],
-      y: v[1],
-      z: v[2]
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(v)
     }
   }
 
   #[inline]
   pub const fn to_array(self)-> [f32;3] {
-    [self.x,self.y,self.z]
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(self)
+    }
   }
 
   #[inline]
-  pub const fn from_slice(v: &[f32])-> Self {
-    Vec3 {
-      x: v[0],
-      y: v[1],
-      z: v[2]
+  pub const fn from_slice(slice: &[f32])-> Self {
+    // SAFETY: trust me bro
+    unsafe {
+      mem::transmute(ptr::read(slice as *const _ as  *const [f32;3]))
     }
   }
 
